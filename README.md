@@ -2,10 +2,12 @@
 
 > A low-cost vibration sensor for machinery and structures, built entirely from analog parts: a piezoelectric element, one op-amp and two resistors. No microcontroller.
 
-![Calibration setup](media/calibration_setup.jpg)
+![Calibration setup](calibration_setup.jpg)
 
 **Course:** EE251 – Semester 3 Sensor Project, University of Peradeniya · **Duration:** Dec 2024 – Apr 2025
+
 **Team:** Harishraj T., Shakthidharan S., Nirojan A.
+
 **My role:** *(fill in, e.g. "Amplifier design and Proteus simulation, calibration measurements")*
 
 ---
@@ -28,16 +30,16 @@ Vibration levels in motors, industrial machines and structures are an early warn
    **Gain = 1 + R2/R1 = 1 + 500 kΩ / 10 kΩ = 51** (≈ 34 dB).
 4. The amplified output is read on an oscilloscope, and a calibration curve converts voltage to amplitude.
 
-![Amplifier schematic](hardware/amplifier_schematic.png)
+![Amplifier schematic](amplifier_schematic.png)
 
 Power: two 9 V batteries (±9 V split supply).
 
 ## Calibration
 A speaker driven by a signal generator acted as a controlled vibration source. The piezo sensor was mounted on the speaker, and the output voltage was recorded against vibration amplitude (0.1–2.5 mm) at 100, 200 and 300 Hz.
 
-![Calibration curves](docs/calibration_curve.png)
+![Calibration curves](calibration_curve.png)
 
-Linear fit for each frequency, from [`analysis/calibration_analysis.py`](analysis/calibration_analysis.py):
+Linear fit for each frequency, from [`calibration_analysis.py`](calibration_analysis.py):
 
 | Frequency | Sensitivity | R² |
 |---|---|---|
@@ -45,7 +47,7 @@ Linear fit for each frequency, from [`analysis/calibration_analysis.py`](analysi
 | 200 Hz | ≈ 560 mV/mm | 0.955 |
 | 300 Hz | ≈ 2240 mV/mm | 0.928 |
 
-Raw data: [`data/calibration.csv`](data/calibration.csv)
+Raw data: [`calibration.csv`](calibration.csv)
 
 **What the data shows**
 - At **100 Hz** the response is highly linear (R² = 0.99) across the full 0.1–2.5 mm range.
@@ -63,19 +65,20 @@ Raw data: [`data/calibration.csv`](data/calibration.csv)
 - The LM741 is an old, noisy op-amp that needs a split supply. A modern rail-to-rail op-amp would allow single-supply operation and lower noise.
 - Future work: add an ADC or microcontroller to compute RMS amplitude and frequency automatically, a threshold alarm for predictive maintenance, and vibration energy harvesting.
 
-## Repository structure
-```
-├── analysis/   # calibration_analysis.py — linear fits + plot
-├── data/       # calibration.csv — output voltage vs amplitude
-├── docs/       # report.pdf, calibration_curve.png
-├── hardware/   # amplifier schematic (Proteus)
-└── media/      # calibration setup photo
-```
+## Files
+| File | Contents |
+|---|---|
+| `calibration.csv` | Output voltage vs amplitude at 100/200/300 Hz |
+| `calibration_analysis.py` | Linear fits and calibration plot |
+| `calibration_curve.png` | Generated calibration plot |
+| `amplifier_schematic.png` | LM741 amplifier (Proteus) |
+| `calibration_setup.jpg` | Test rig photo |
+| `report.pdf` | Full project report |
 
 ## Reproduce the analysis
 ```bash
 pip install numpy matplotlib
-python analysis/calibration_analysis.py
+python calibration_analysis.py
 ```
 
 ## Acknowledgements
