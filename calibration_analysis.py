@@ -1,19 +1,19 @@
 """
 Calibration analysis for the piezoelectric vibration sensor.
 
-Reads data/calibration.csv (output voltage vs vibration amplitude at
+Reads calibration.csv (output voltage vs vibration amplitude at
 100, 200 and 300 Hz), fits a straight line to each frequency, prints
-sensitivity (mV/mm) and R^2, and saves docs/calibration_curve.png.
+sensitivity (mV/mm) and R^2, and saves calibration_curve.png.
 
 Run from the repository root:
-    python analysis/calibration_analysis.py
+    python calibration_analysis.py
 Requires: numpy, matplotlib
 """
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
-with open("data/calibration.csv") as f:
+with open("calibration.csv") as f:
     rows = list(csv.DictReader(f))
 
 amp = np.array([float(r["amplitude_mm"]) for r in rows])
@@ -40,5 +40,5 @@ plt.title("Piezo vibration sensor: calibration curves")
 plt.grid(True, alpha=0.3)
 plt.legend(fontsize=8)
 plt.tight_layout()
-plt.savefig("docs/calibration_curve.png", dpi=150)
-print("Saved docs/calibration_curve.png")
+plt.savefig("calibration_curve.png", dpi=150)
+print("Saved calibration_curve.png")
